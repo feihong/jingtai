@@ -21,6 +21,7 @@ def start_watcher(dir_list):
 class Watcher(FileSystemEventHandler):
     def dispatch(self, evt):
         if not evt.is_directory:
+            print('%s: %s' % (evt.event_type, evt.src_path))
             send('reload')
 
     def stop(self):

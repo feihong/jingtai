@@ -30,7 +30,7 @@ with open('README.rst') as fp:
 setup(
     name='jingtai',
     version=version,
-    description='A static site generator for coders who love minimal syntaxes',
+    description='Static site generator for coders who love minimal syntaxes',
     long_description=readme,
     author='Feihong Hsu',
     author_email='feihong.hsu@gmail.com',

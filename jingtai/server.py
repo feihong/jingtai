@@ -56,7 +56,7 @@ class NoCacheFileHandler(RequestHandler):
     def get(self, path):
         self.set_header('Cache-Control', 'no-store')
 
-        filepath = site.site_dir / path.lstrip('/')
+        filepath = site.site_dir / path
         if filepath.is_dir():
             filepath = filepath / 'index.html'
 
