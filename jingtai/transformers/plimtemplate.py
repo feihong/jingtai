@@ -5,6 +5,7 @@ from mako.lookup import TemplateLookup
 from plim import preprocessor
 
 from .base import SourceFileTransformer, register_transformer
+from .util import split_markup
 
 
 @register_transformer
@@ -20,8 +21,9 @@ class PlimTransformer(SourceFileTransformer):
             preprocessor=preprocessor)
 
     def transform(self, src):
+        ctx, text = split_markup(src.read_text())
         tmpl = Template(
-            text=src.read_text(),
+            text=text,
             lookup=self.lookup,
             preprocessor=preprocessor)
-        return tmpl.render(BASE=self.site.base_url)
+        return tmpl.render(BASE=self.site.base_url, **ctx)

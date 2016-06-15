@@ -1,12 +1,26 @@
+title: Home
+preprocessors:
+- http://plim.readthedocs.io/en/latest/ Plim Mako template
+- https://en.wikipedia.org/wiki/Markdown Markdown HTML
+- https://en.wikipedia.org/wiki/ReStructuredText ReStructuredText HTML
+- http://stylus-lang.com/ Stylus CSS
+- http://coffeescript.org/ CoffeeScript JavaScript
+
+===
+
 -inherit base.html
 
--block name='title'
-  Home
+h1 = title
 
-h1 = title()
+p Welcome to the home page!
 
-p Welcome to the home page.
+p Preprocessors used by jingtai:
 
-p doowop a loo
+ul
+  -for line in preprocessors
+    li
+      --- link, name, desc = line.split(' ', 2)
+      a href=link = name
+      = ' -> ' + desc
 
 p The base url is <code>${BASE}</code>
