@@ -14,6 +14,7 @@ requires = [
     'invoke',
     'markdown2',
     'Plim',
+    'PyYAML',
     'tornado',
     'watchdog',
 ]

@@ -1,3 +1,5 @@
+import json
+
 from tornado import gen, iostream
 from tornado.web import Application, RequestHandler, RedirectHandler
 from tornado.websocket import WebSocketHandler
@@ -24,7 +26,7 @@ def start_server(site_, port):
     else:
         handlers = []
     handlers.extend([
-        (r'/__reload.js/', ReloadJSHandler),
+        (r'/__reload.js', ReloadJSHandler),
         (r'/__reload__/', ReloadHandler),
         (site.base_url + r'(.*)', NoCacheFileHandler),
     ])
@@ -72,6 +74,8 @@ class NoCacheFileHandler(RequestHandler):
         if isinstance(result, tuple):
             mime_type, content = result
             self.set_header('Content-Type', mime_type)
+            if mime_type == 'text/html':
+                content = add_reload_snippet(content)
             self.finish(content)
             return
 
@@ -94,7 +98,7 @@ class SendCallable:
         self.loop = None
         self.sockets = None
 
-    def __call__(self, obj):
+    def __call__(self, data):
         """
         It is safe to call this method from outside the main thread that is
         running the Tornado event loop.
@@ -102,7 +106,6 @@ class SendCallable:
         """
         if not self.loop:
             return
-        data = json.dumps(obj)
         self.loop.add_callback(self._send, data)
 
     def _send(self, data):
@@ -130,3 +133,12 @@ def get_content(path):
                 if remaining is not None:
                     assert remaining == 0
                 return
+
+
+def add_reload_snippet(html):
+    index = html.find('</body>')
+    if index == -1:
+        return html
+    else:
+        return (html[:index] + '<script src="/__reload.js"></script>' +
+                html[index:])

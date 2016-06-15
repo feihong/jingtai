@@ -6,6 +6,7 @@
   ws.onmessage = function(evt) {
     if (evt.data === 'reload') {
       console.log('Reloading...')
+      ws.close()
       document.location.reload(true)
     }
   }

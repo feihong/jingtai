@@ -7,6 +7,8 @@ site = Site('/jingtai/')
 
 @task
 def serve(ctx):
+    site.watch('site')
+    site.watch('templates')
     site.serve(port=8000)
 
 
