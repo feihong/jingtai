@@ -1,20 +1,19 @@
 title: Home
-preprocessors:
-- http://plim.readthedocs.io/en/latest/ Plim Mako template
-- https://en.wikipedia.org/wiki/Markdown Markdown HTML
-- https://en.wikipedia.org/wiki/ReStructuredText ReStructuredText HTML
-- http://stylus-lang.com/ Stylus CSS
-- http://coffeescript.org/ CoffeeScript JavaScript
 pages:
 - stylus/ Stylus
 - coffee/ CoffeeScript
 - markdown/ Markdown
 - restructuredtext/ ReStructuredText
+technologies:
+- http://plim.readthedocs.io/en/latest/ Plim Preprocessor for Mako templates
+- https://en.wikipedia.org/wiki/Markdown Markdown HTML preprocessor
+- https://en.wikipedia.org/wiki/ReStructuredText ReStructuredText HTML preprocessor
+- http://stylus-lang.com/ Stylus CSS preprocessor
+- http://coffeescript.org/ CoffeeScript JavaScript preprocessor
+
 ===
 
 -inherit base.html
-
-h1 = title
 
 p Welcome to the home page!
 
@@ -27,11 +26,10 @@ ul
     li
       a href=link = body
 
-h2 Preprocessors used by jingtai:
+h2 Technologies used by jingtai:
 
 ul
-  -for line in preprocessors
+  -for line in technologies
     li
       --- link, name, desc = line.split(' ', 2)
-      a href=link = name
-      = ' -> ' + desc
+      <a href=link>${name}</a> (${desc})
