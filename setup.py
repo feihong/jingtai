@@ -10,10 +10,12 @@ if sys.argv[-1] == 'publish':
 
 
 requires = [
-    'Plim',
-    'watchdog',
+    'docutils',
     'invoke',
+    'markdown2',
+    'Plim',
     'tornado',
+    'watchdog',
 ]
 if sys.version_info[0] == 2:
     requires.extend(['futures', 'pathlib2'])

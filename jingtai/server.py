@@ -64,12 +64,14 @@ class NoCacheFileHandler(RequestHandler):
             self.clear()
             self.set_status(404)
             self.finish((site.site_dir / '404.html').read_bytes())
+            return
 
         result = transform(filepath)
         if isinstance(result, tuple):
             mime_type, content = result
             self.set_header('Content-Type', mime_type)
             self.finish(content)
+            return
 
         content = get_content(filepath)
         for chunk in content:

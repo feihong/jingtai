@@ -13,18 +13,15 @@ class PlimTransformer(SourceFileTransformer):
     output_ext = '.html'
     mime_type = 'text/html'
 
+    def __init__(self, site):
+        super(PlimTransformer, self).__init__(site)
+        self.lookup = TemplateLookup(
+            directories=[str(self.site.template_dir)],
+            preprocessor=preprocessor)
+
     def transform(self, src):
         tmpl = Template(
             text=src.read_text(),
             lookup=self.lookup,
             preprocessor=preprocessor)
         return tmpl.render()
-
-    @property
-    def lookup(self):
-        res = getattr(self, '_lookup', None)
-        if res is None:
-            self._lookup = TemplateLookup(
-                directories=[str(self.site.template_dir)],
-                preprocessor=preprocessor)
-        return self._lookup
