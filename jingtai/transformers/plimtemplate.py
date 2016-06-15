@@ -27,9 +27,10 @@ class PlimTransformer(SourceFileTransformer):
 
     def transform(self, src):
         ctx, text = split_markup(src.read_text())
+        ctx['BASE'] = self.site.base_url
         tmpl = Template(
             text=text,
             lookup=self.lookup,
             preprocessor=preprocessor,
             imports=IMPORTS)
-        return tmpl.render(BASE=self.site.base_url, **ctx)
+        return tmpl.render(**ctx)
