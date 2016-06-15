@@ -13,4 +13,4 @@ class MarkdownTransformer(SourceFileTransformer):
     mime_type = 'text/html'
 
     def transform(self, src):
-        return markdown2.markdown(src.read_text(), extras)
+        return markdown2.markdown(src.read_text(), extras=extras)

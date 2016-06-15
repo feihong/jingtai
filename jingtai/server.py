@@ -14,6 +14,7 @@ from .transformers import transform
 
 
 here = Path(__file__).parent
+PAGE_FORMAT_EXTS = ['.html', '.md', '.rst']
 site = None
 
 
@@ -62,7 +63,9 @@ class NoCacheFileHandler(RequestHandler):
 
         filepath = site.site_dir / path
         if filepath.is_dir():
-            filepath = filepath / 'index.html'
+            index_file = find_index_file(filepath)
+            if index_file:
+                filepath = index_file
 
         if not filepath.exists():
             self.clear()
@@ -115,6 +118,14 @@ class SendCallable:
 
 
 send = SendCallable()
+
+
+def find_index_file(dir):
+    for ext in PAGE_FORMAT_EXTS:
+        index_file = dir / ('index'+ext)
+        if index_file.exists():
+            return index_file
+    return None
 
 
 def get_content(path):

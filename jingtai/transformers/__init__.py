@@ -5,7 +5,7 @@ __all__ = ['transform', 'SourceFileTransformer', 'register_transformer']
 
 from .base import (SourceFileTransformer, register_transformer,
     init_transformers, transformers)
-from . import plimtemplate, coffeescript, stylus, rst, md
+from . import plimtemplate, coffeescript, stylus, md, rst
 
 
 
