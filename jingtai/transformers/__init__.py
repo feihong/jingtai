@@ -1,13 +1,17 @@
 
 
-__all__ = ['get_transformer', 'SourceFileTransformer', 'register_transformer']
+__all__ = ['transform', 'SourceFileTransformer', 'register_transformer']
 
 
-from .base import SourceFileTransformer, register_transformer, transformers
+from .base import (SourceFileTransformer, register_transformer,
+    init_transformers, transformers)
+from . import plimtemplate, coffeescript, stylus
 
 
-def get_transformer(src_file):
-    for transformer in transformers:
-        if src_file.suffix == transformer.input_ext:
-            return transformer
-    return None
+
+def transform(src_file):
+    transformer = transformers.get(src_file.suffix)
+    if transformer is not None:
+        return transformer.mime_type, transformer.transform(src_file)
+    else:
+        return None

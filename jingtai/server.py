@@ -8,7 +8,7 @@ import plim
 import stylus
 
 from .compat import Path
-from .transformers import get_transformer
+from .transformers import transform
 
 
 here = Path(__file__).parent
@@ -64,6 +64,12 @@ class NoCacheFileHandler(RequestHandler):
             self.clear()
             self.set_status(404)
             self.finish((site.site_dir / '404.html').read_bytes())
+
+        result = transform(filepath)
+        if isinstance(result, tuple):
+            mime_type, content = result
+            self.set_header('Content-Type', mime_type)
+            self.finish(content)
 
         content = get_content(filepath)
         for chunk in content:

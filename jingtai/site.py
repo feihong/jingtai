@@ -1,11 +1,10 @@
 from .compat import Path
 from .server import start_server, send
 from .watcher import start_watcher
+from .transformers import init_transformers
 
 
 class Site(object):
-    _current = None
-
     def __init__(self, base_url):
         self.base_url = base_url
         self.site_dir = Path.cwd() / 'site'
@@ -13,13 +12,12 @@ class Site(object):
         self.template_dir = Path.cwd() / 'templates'
         self.watch_list = []
 
-        Site._current = self
-
     @classmethod
-    def current(cls):
-        return Site._current
+    def instance(cls):
+        return Site._instance
 
     def serve(self, port=8000):
+        init_transformers(self)
         watcher = start_watcher(self.watch_list)
         start_server(self, port)
         watcher.stop()
@@ -31,6 +29,7 @@ class Site(object):
         self.watch_list.append(dirname)
 
     def build(self):
+        init_transformers(self)
         self.clean()
         for src in self.site_dir.rglob('*?.*'):
             dest_dir = self.build_dir / src.relative_to(self.site_dir).parent

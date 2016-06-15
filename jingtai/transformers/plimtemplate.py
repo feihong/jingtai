@@ -5,7 +5,6 @@ from mako.lookup import TemplateLookup
 from plim import preprocessor
 
 from .base import SourceFileTransformer, register_transformer
-from ..site import Site
 
 
 @register_transformer
@@ -23,9 +22,9 @@ class PlimTransformer(SourceFileTransformer):
 
     @property
     def lookup(self):
-        res = getattr(self, '_lookup')
+        res = getattr(self, '_lookup', None)
         if res is None:
             self._lookup = TemplateLookup(
-                directories=[str(Site.current().template_dir)],
+                directories=[str(self.site.template_dir)],
                 preprocessor=preprocessor)
         return self._lookup
