@@ -24,4 +24,4 @@ class PlimTransformer(SourceFileTransformer):
             text=src.read_text(),
             lookup=self.lookup,
             preprocessor=preprocessor)
-        return tmpl.render()
+        return tmpl.render(BASE=self.site.base_url)

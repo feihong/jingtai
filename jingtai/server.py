@@ -1,5 +1,5 @@
 from tornado import gen, iostream
-from tornado.web import Application, RequestHandler
+from tornado.web import Application, RequestHandler, RedirectHandler
 from tornado.websocket import WebSocketHandler
 from tornado.ioloop import IOLoop
 from mako.template import Template
@@ -17,16 +17,18 @@ site = None
 
 def start_server(site_, port):
     global site, app
-    settings = dict(
-        debug=True,
-        # autoreload=True,
-    )
-    app = Application([
+    site = site_
+
+    if site.base_url != '/':
+        handlers = [(r'/', RedirectHandler, dict(url=site.base_url))]
+    else:
+        handlers = []
+    handlers.extend([
         (r'/__reload.js/', ReloadJSHandler),
         (r'/__reload__/', ReloadHandler),
-        (r'/(.*)', NoCacheFileHandler),
-    ], **settings)
-    site = site_
+        (site.base_url + r'(.*)', NoCacheFileHandler),
+    ])
+    app = Application(handlers, debug=True)
     app.sockets = set()
     app.listen(port)
 
