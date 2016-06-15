@@ -8,6 +8,11 @@ from .base import SourceFileTransformer, register_transformer
 from .util import split_markup
 
 
+IMPORTS = [
+    'from jingtai.assets import stylesheet, script'
+]
+
+
 @register_transformer
 class PlimTransformer(SourceFileTransformer):
     input_ext = '.html'
@@ -25,5 +30,6 @@ class PlimTransformer(SourceFileTransformer):
         tmpl = Template(
             text=text,
             lookup=self.lookup,
-            preprocessor=preprocessor)
+            preprocessor=preprocessor,
+            imports=IMPORTS)
         return tmpl.render(BASE=self.site.base_url, **ctx)
