@@ -52,7 +52,7 @@ I really like programming in [Python][python]. I'm not a big fan of [Ruby][ruby]
 
 <first.last@address.com> (view the source to see that address is entity-encoded)
 
-Line breaks:
+**Line breaks**:
 
 Awkward at weddings  
 Godzilla only came for  
