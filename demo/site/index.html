@@ -5,7 +5,11 @@ preprocessors:
 - https://en.wikipedia.org/wiki/ReStructuredText ReStructuredText HTML
 - http://stylus-lang.com/ Stylus CSS
 - http://coffeescript.org/ CoffeeScript JavaScript
-
+pages:
+- stylus/ Stylus
+- coffee/ CoffeeScript
+- markdown/ Markdown
+- restructuredtext/ ReStructuredText
 ===
 
 -inherit base.html
@@ -14,7 +18,16 @@ h1 = title
 
 p Welcome to the home page!
 
-p Preprocessors used by jingtai:
+p The base url for this site is <code>${BASE}</code>
+
+h2 Example pages:
+
+ul
+  -for link, body in (line.split(' ', 1) for line in pages):
+    li
+      a href=link = body
+
+h2 Preprocessors used by jingtai:
 
 ul
   -for line in preprocessors
@@ -22,5 +35,3 @@ ul
       --- link, name, desc = line.split(' ', 2)
       a href=link = name
       = ' -> ' + desc
-
-p The base url is <code>${BASE}</code>
