@@ -3,7 +3,8 @@ from mako.template import Template
 from mako.lookup import TemplateLookup
 from plim import preprocessor
 
-from .base import SourceFileTransformer, register_transformer
+from .base import register_transformer
+from .page import PageTransformer
 from .util import split_markup
 
 
@@ -11,16 +12,8 @@ EXTRAS = ['fenced-code-blocks', 'footnotes']
 
 
 @register_transformer
-class MarkdownTransformer(SourceFileTransformer):
+class MarkdownTransformer(PageTransformer):
     input_ext = '.md'
-    output_ext = '.html'
-    mime_type = 'text/html'
-
-    def __init__(self, site):
-        super(MarkdownTransformer, self).__init__(site)
-        self.lookup = TemplateLookup(
-            directories=[str(self.site.template_dir)],
-            preprocessor=preprocessor)
 
     def transform(self, src):
         ctx, text = split_markup(src.read_text())
