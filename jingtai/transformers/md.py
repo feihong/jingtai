@@ -1,7 +1,5 @@
 import markdown2
 from mako.template import Template
-from mako.lookup import TemplateLookup
-from plim import preprocessor
 
 from .base import register_transformer
 from .page import PageTransformer

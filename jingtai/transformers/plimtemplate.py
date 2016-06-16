@@ -1,7 +1,6 @@
 import subprocess
 
 from mako.template import Template
-from mako.lookup import TemplateLookup
 from plim import preprocessor
 
 from .base import register_transformer

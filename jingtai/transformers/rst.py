@@ -1,17 +1,27 @@
 from docutils.core import publish_parts
+from mako.template import Template
 
-from .base import SourceFileTransformer, register_transformer
+from .base import register_transformer
+from .page import PageTransformer
+from .util import split_markup
 
 
 @register_transformer
-class ReStructuredTextTransformer(SourceFileTransformer):
+class ReStructuredTextTransformer(PageTransformer):
     input_ext = '.rst'
-    output_ext = '.html'
-    mime_type = 'text/html'
 
     def transform(self, src):
+        ctx, text = split_markup(src.read_text())
+        ctx['BASE'] = self.site.base_url
+        text = '<%inherit file="base.html" />\n\n' + self.to_html(text)
+        tmpl = Template(
+            text=text,
+            lookup=self.lookup)
+        return tmpl.render(**ctx)
+
+    def to_html(self, text):
         result = publish_parts(
-            src.read_text(),
+            text,
             writer_name='html',
             settings_overrides={'initial_header_level': 2})['html_body']
         # Get rid of the outer div.
