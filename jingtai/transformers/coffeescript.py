@@ -12,6 +12,6 @@ class CoffeeScriptTransformer(SourceFileTransformer):
         cmd = ['coffee', '-c', '-p', str(src)]
         return subprocess.check_output(cmd)
 
-    def build(self, src):
-        cmd = ['coffee', '-c', str(src), '-o', str(self.get_dest_dir(src))]
+    def build(self, src, dest_dir):
+        cmd = ['coffee', '-c', '-o', str(dest_dir), str(src)]
         return subprocess.call(cmd)

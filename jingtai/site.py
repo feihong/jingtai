@@ -1,9 +1,12 @@
 import shutil
 
+from invoke import run
+
 from .compat import Path
 from .server import start_server, send
 from .watcher import start_watcher
 from .transformers import init_transformers, transformers
+from . import assets
 
 
 class Site(object):
@@ -33,15 +36,16 @@ class Site(object):
     def build(self):
         init_transformers(self)
         self.clean()
+
+        assets.mode = 'build'
         for src in self.site_dir.rglob('*?.*'):
+            print(src)
+            dest_dir = self.get_make_dest_dir(src)
             transformer = transformers.get(src.suffix)
             if transformer is not None:
-                transformer.build(src)
+                transformer.build(src, dest_dir)
             else:
-                shutil.copy(
-                    str(src),
-                    str(self.build_dir / src.relative_to(self.site_dir))
-                )
+                shutil.copy(str(src), str(dest_dir))
 
     def clean(self):
         if self.build_dir.is_dir():
@@ -50,3 +54,10 @@ class Site(object):
     def publish(self):
         self.build()
         run('ghp-import -n -p %s' % self.build_dir)
+
+    def get_make_dest_dir(self, src):
+        dest = self.build_dir / src.relative_to(self.site_dir)
+        dest_dir = dest.parent
+        if not dest_dir.exists():
+            dest_dir.mkdir(parents=True)
+        return dest_dir

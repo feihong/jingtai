@@ -25,12 +25,9 @@ class SourceFileTransformer(object):
     def transform(self, src):
         return NotImplementedError()
 
-    def get_dest_dir(self, src):
-        return self.site.build_dir / src.relative_to(self.site.site_dir)
+    def get_dest_file(self, src, dest_dir):
+        return dest_dir / (src.stem + self.output_ext)
 
-    def get_dest_file(self, src):
-        return self.get_dest_dir(src) / (src.stem + self.output_ext)
-
-    def build(self, src):
-        with self.get_dest_file(src).open('w') as fp:
+    def build(self, src, dest_dir):
+        with self.get_dest_file(src, dest_dir).open('w') as fp:
             fp.write(self.transform(src))
