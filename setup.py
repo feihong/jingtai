@@ -17,6 +17,7 @@ requires = [
     'PyYAML',
     'tornado',
     'watchdog',
+    'ghp-import',
 ]
 if sys.version_info[0] == 2:
     requires.extend(['futures', 'pathlib2'])
