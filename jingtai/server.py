@@ -1,7 +1,7 @@
 import json
 
 from tornado import gen, iostream
-from tornado.web import Application, RequestHandler, RedirectHandler
+from tornado.web import Application, RequestHandler, RedirectHandler, StaticFileHandler
 from tornado.websocket import WebSocketHandler
 from tornado.ioloop import IOLoop
 from mako.template import Template
@@ -38,6 +38,19 @@ def start_server(site_, port):
     loop = IOLoop.current()
     send.loop = loop
     send.sockets = app.sockets
+    loop.start()
+
+
+def start_static_server(site_, port):
+    settings = dict(
+        path=str(site_.build_dir),
+        default_filename='index.html',
+    )
+    app = Application([
+        (site_.base_url + r'(.*)', StaticFileHandler, settings),
+    ])
+    app.listen(port)
+    loop = IOLoop.current()
     loop.start()
 
 

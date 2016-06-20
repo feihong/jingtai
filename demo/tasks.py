@@ -13,6 +13,11 @@ def serve(ctx):
 
 
 @task
+def serve_build(ctx):
+    site.serve_build(port=8000)
+
+
+@task
 def build(ctx):
     site.build()
 

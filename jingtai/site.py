@@ -3,7 +3,7 @@ import shutil
 from invoke import run
 
 from .compat import Path
-from .server import start_server, send
+from .server import start_server, send, start_static_server
 from .watcher import start_watcher
 from .transformers import init_transformers, transformers
 from . import assets
@@ -28,7 +28,7 @@ class Site(object):
         watcher.stop()
 
     def serve_build(self, port=8000):
-        pass
+        start_static_server(self, port)
 
     def watch(self, dirname):
         self.watch_list.append(dirname)
