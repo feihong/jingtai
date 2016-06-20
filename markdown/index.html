@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><title>Markdown</title>
+
+</head><body><h1>Markdown</h1>
+
+<p>This page was written in <a href="https://daringfireball.net/projects/markdown/">Markdown</a>.</p>
+
+<h2>Fenced code blocks</h2>
+
+<pre><code>@app.route(SITE)
+@app.route(SITE + '&lt;path:path&gt;')
+def page(path=''):
+    file_ = get_file(path)
+    if file_ is None:
+        with open('site/404.html') as fp:
+            return fp.read()
+
+    if file_.suffix in PAGE_FORMATS:
+        return render_page(file_)
+
+    if file_.suffix == '.styl':
+        bottle.response.content_type = 'text/css'
+        return render_stylesheet(file_)
+
+    return bottle.static_file(path, root='site')
+</code></pre>
+
+<h2>Blockquote</h2>
+
+<blockquote>
+  <p>每当音乐响起</p>
+  
+  <p>总是身不由己</p>
+  
+  <p>走进梦幻的世界</p>
+  
+  <p>一切变得很神奇</p>
+</blockquote>
+
+<h2>Reference links</h2>
+
+<p>I really like programming in <a href="https://python.org">Python</a>. I'm not a big fan of <a href="https://ruby-lang.org">Ruby</a>, though. I can tell you that <a href="https://python.org">Python</a> never lets me down!</p>
+
+<h2>Images</h2>
+
+<p><img src="http://67.media.tumblr.com/71313cc8d41737c0ec31d957fe9dfb61/tumblr_mi2on7vxWZ1rvuj8do1_500.png" alt="A fun picture I drew" /></p>
+
+<h2>Miscellaneous</h2>
+
+<p><strong>Email address</strong>:</p>
+
+<p><a href="m&#97;&#105;&#108;&#x74;&#111;&#x3a;&#x66;&#x69;&#x72;&#115;&#x74;.&#108;&#97;&#x73;t&#64;a&#100;&#100;&#x72;&#x65;&#x73;&#x73;&#x2e;&#99;o&#109;">&#x66;&#x69;&#x72;&#115;&#x74;.&#108;&#97;&#x73;t&#64;a&#100;&#100;&#x72;&#x65;&#x73;&#x73;&#x2e;&#99;o&#109;</a> (view the source to see that address is entity-encoded)</p>
+
+<p><strong>Line breaks</strong>:</p>
+
+<p>Awkward at weddings <br />
+Godzilla only came for <br />
+The free food and drinks  </p>
+
+<div style='font-size: 0.7em; color: gray'>Source: <a href='http://godzillahaiku.tumblr.com/post/625840712/72'>Godzilla Haiku</a></div>
+
+
+</body></html>
