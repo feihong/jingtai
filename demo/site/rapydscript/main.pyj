@@ -1,0 +1,4 @@
+print('Yay this was printed by RapydScript')
+
+jq = window.jQuery
+jq('#content').text('Hello from RapydScript!')

@@ -2,6 +2,7 @@ title: Home
 pages:
 - stylus/ Stylus
 - coffee/ CoffeeScript
+- rapydscript/ RapydScript
 - markdown/ Markdown
 - restructuredtext/ ReStructuredText
 technologies:
