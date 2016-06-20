@@ -16,7 +16,7 @@ class MarkdownTransformer(PageTransformer):
     def transform(self, src):
         ctx, text = split_markup(src.read_text())
         ctx['BASE'] = self.site.base_url
-        text = '<%inherit file="base.html" />\n\n' + self.to_html(text)
+        text = '<%inherit file="base.plim" />\n\n' + self.to_html(text)
         # Note that we don't use the plim preprocessor here, because arbitrary
         # HTML confuses the plim parser.
         tmpl = Template(

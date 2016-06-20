@@ -32,5 +32,5 @@ class SourceFileTransformer(object):
         return self.get_dest_dir(src) / (src.stem + self.output_ext)
 
     def build(self, src):
-        with self.get_dest_file(src, dest_dir).open('w') as fp:
+        with self.get_dest_file(src).open('w') as fp:
             fp.write(self.transform(src))

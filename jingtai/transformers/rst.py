@@ -13,7 +13,7 @@ class ReStructuredTextTransformer(PageTransformer):
     def transform(self, src):
         ctx, text = split_markup(src.read_text())
         ctx['BASE'] = self.site.base_url
-        text = '<%inherit file="base.html" />\n\n' + self.to_html(text)
+        text = '<%inherit file="base.plim" />\n\n' + self.to_html(text)
         tmpl = Template(
             text=text,
             lookup=self.lookup)

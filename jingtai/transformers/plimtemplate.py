@@ -15,7 +15,7 @@ IMPORTS = [
 
 @register_transformer
 class PlimTransformer(PageTransformer):
-    input_ext = '.html'
+    input_ext = '.plim'
 
     def transform(self, src):
         ctx, text = split_markup(src.read_text())

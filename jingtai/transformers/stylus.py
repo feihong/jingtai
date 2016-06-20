@@ -13,5 +13,5 @@ class StylusTransformer(SourceFileTransformer):
         return subprocess.check_output(cmd)
 
     def build(self, src):
-        cmd = ['stylus', '-o', str(self.get_dest_file(src)), str(src)]
+        cmd = ['stylus', str(src), '-o', str(self.get_dest_file(src))]
         return subprocess.call(cmd)

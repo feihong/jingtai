@@ -14,7 +14,7 @@ from .transformers import transform
 
 
 here = Path(__file__).parent
-PAGE_FORMAT_EXTS = ['.html', '.md', '.rst']
+PAGE_FORMAT_EXTS = ['.html', '.plim', '.md', '.rst']
 site = None
 
 

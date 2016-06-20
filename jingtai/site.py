@@ -1,7 +1,9 @@
+import shutil
+
 from .compat import Path
 from .server import start_server, send
 from .watcher import start_watcher
-from .transformers import init_transformers
+from .transformers import init_transformers, transformers
 
 
 class Site(object):
@@ -32,9 +34,14 @@ class Site(object):
         init_transformers(self)
         self.clean()
         for src in self.site_dir.rglob('*?.*'):
-            dest_dir = self.build_dir / src.relative_to(self.site_dir).parent
-            dest_file = self.copy_or_generate(src, dest_dir)
-            print(dest_file)
+            transformer = transformers.get(src.suffix)
+            if transformer is not None:
+                transformer.build(src)
+            else:
+                shutil.copy(
+                    str(src),
+                    str(self.build_dir / src.relative_to(self.site_dir))
+                )
 
     def clean(self):
         if self.build_dir.is_dir():
