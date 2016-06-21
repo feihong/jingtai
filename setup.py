@@ -40,7 +40,12 @@ setup(
     author_email='feihong.hsu@gmail.com',
     url='https://github.com/feihong/jingtai',
     packages=find_packages(),
-    package_data={'': 'reload.js'},
+    package_data={'': 'reload.js'},   # need to fix this
+    entry_points={
+        'console_scripts': [
+            'jingtai = jingtai.command:create_project',
+        ]
+    },
     install_requires=requires,
     license='Apache 2.0',
     zip_safe=False,
