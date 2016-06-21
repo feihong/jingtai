@@ -23,7 +23,7 @@ def start_server(site_, port):
     site = site_
 
     if site.base_url != '/':
-        handlers = [(r'/', RedirectHandler, dict(url=site.base_url))]
+        handlers = [(r'/', RedirectHandler, {'url': site.base_url, 'permanent': False})]
     else:
         handlers = []
     handlers.extend([
