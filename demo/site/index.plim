@@ -18,7 +18,7 @@ technologies:
 
 p Welcome to the home page!
 
-p The base url for this site is <code>${BASE}</code>
+p The base url for this site is `code= BASE`.
 
 h2 Example pages:
 

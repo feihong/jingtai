@@ -20,6 +20,7 @@ class PlimTransformer(PageTransformer):
     def transform(self, src):
         ctx, text = split_markup(src.read_text())
         ctx['BASE'] = self.site.base_url
+        ctx['PATH'] = src
         tmpl = Template(
             text=text,
             lookup=self.lookup,
