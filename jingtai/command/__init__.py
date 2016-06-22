@@ -16,7 +16,7 @@ def create_project():
     root.mkdir()
 
     (root / 'tasks.py').write_text(
-        (resources / 'tasks.py').read_text() % {'project_name': proj_name}
+        (resources / 'tasks.py').read_text().replace('PROJECT_NAME', proj_name)
     )
 
     site = root / 'site'

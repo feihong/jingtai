@@ -2,7 +2,7 @@ from invoke import task
 from jingtai import Site
 
 
-site = Site('/%(project_name)s/')
+site = Site('/PROJECT_NAME/')
 
 
 @task
