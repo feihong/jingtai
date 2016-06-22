@@ -10,12 +10,13 @@ from . import assets
 
 
 class Site(object):
-    def __init__(self, base_url):
+    def __init__(self, base_url, template_imports=None):
         self.base_url = base_url
         self.site_dir = Path.cwd() / 'site'
         self.build_dir = Path.cwd() / 'build'
         self.template_dir = Path.cwd() / 'templates'
         self.watch_list = []
+        self.template_imports = template_imports if template_imports else []
 
     @classmethod
     def instance(cls):

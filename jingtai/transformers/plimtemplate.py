@@ -25,5 +25,5 @@ class PlimTransformer(PageTransformer):
             text=text,
             lookup=self.lookup,
             preprocessor=preprocessor,
-            imports=IMPORTS)
+            imports=self.site.template_imports + IMPORTS)
         return tmpl.render(**ctx)
