@@ -8,11 +8,6 @@ from .page import PageTransformer
 from .util import split_markup
 
 
-IMPORTS = [
-    'from jingtai.assets import stylesheet, script'
-]
-
-
 @register_transformer
 class PlimTransformer(PageTransformer):
     input_ext = '.plim'
@@ -25,5 +20,5 @@ class PlimTransformer(PageTransformer):
             text=text,
             lookup=self.lookup,
             preprocessor=preprocessor,
-            imports=self.site.template_imports + IMPORTS)
+            imports=self.template_imports + self.site.template_imports)
         return tmpl.render(**ctx)
