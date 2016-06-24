@@ -46,9 +46,14 @@ def start_static_server(site_, port):
         path=str(site_.build_dir),
         default_filename='index.html',
     )
-    app = Application([
-        (site_.base_url + r'(.*)', StaticFileHandler, settings),
+    if site_.base_url != '/':
+        handlers = [(r'/', RedirectHandler, {'url': site_.base_url, 'permanent': False})]
+    else:
+        handlers = []
+    handlers.extend([
+        (site_.base_url + r'(.*)', StaticFileHandler, settings)
     ])
+    app = Application(handlers)
     app.listen(port)
     loop = IOLoop.current()
     loop.start()
