@@ -14,8 +14,11 @@ class PlimTransformer(PageTransformer):
 
     def transform(self, src):
         ctx, text = split_markup(src.read_text())
-        ctx['BASE'] = self.site.base_url
-        ctx['PATH'] = src
+        ctx.update(
+            BASE=self.site.base_url,
+            PATH=src,
+            MODE=self.site.mode,
+        )
         tmpl = Template(
             text=text,
             lookup=self.lookup,

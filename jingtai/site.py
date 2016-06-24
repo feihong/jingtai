@@ -16,6 +16,7 @@ class Site(object):
         self.build_dir = Path.cwd() / 'build'
         self.template_dir = Path.cwd() / 'templates'
         self.watch_list = []
+        self.mode = 'serve'
         self.template_imports = template_imports if template_imports else []
 
     @classmethod
@@ -38,7 +39,7 @@ class Site(object):
         init_transformers(self)
         self.clean()
 
-        assets.mode = 'build'
+        self.mode = assets.mode = 'build'
         for src in self.site_dir.rglob('*?.*'):
             print(src)
             dest_dir = self.get_make_dest_dir(src)
