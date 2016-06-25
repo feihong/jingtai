@@ -9,12 +9,12 @@ from .server import send
 observer = None
 
 
-def start_watcher(dir_list):
+def start_watcher(watch_list):
     global observer
     watcher = Watcher()
     observer = Observer()
-    for dirname in dir_list:
-        observer.schedule(watcher, dirname, recursive=True)
+    for path in watch_list:
+        observer.schedule(watcher, str(path), recursive=True)
     observer.start()
 
 

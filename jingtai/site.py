@@ -32,8 +32,8 @@ class Site(object):
     def serve_build(self, port=8000):
         start_static_server(self, port)
 
-    def watch(self, dirname):
-        self.watch_list.append(dirname)
+    def watch(self, path):
+        self.watch_list.append(Path(path).absolute())
 
     def build(self):
         init_transformers(self)
