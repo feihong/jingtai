@@ -40,14 +40,15 @@ class Site(object):
         self.clean()
 
         self.mode = assets.mode = 'build'
-        for src in self.site_dir.rglob('*?.*'):
-            print(src)
-            dest_dir = self.get_make_dest_dir(src)
-            transformer = transformers.get(src.suffix)
-            if transformer is not None:
-                transformer.build(src, dest_dir)
-            else:
-                shutil.copy(str(src), str(dest_dir))
+        for root, dirs, files in path_walk(self.site_dir):
+            for src in files:
+                print(src)
+                dest_dir = self.get_make_dest_dir(src)
+                transformer = transformers.get(src.suffix)
+                if transformer is not None:
+                    transformer.build(src, dest_dir)
+                else:
+                    shutil.copy(str(src), str(dest_dir))
 
     def clean(self):
         if self.build_dir.is_dir():
@@ -63,3 +64,25 @@ class Site(object):
         if not dest_dir.exists():
             dest_dir.mkdir(parents=True)
         return dest_dir
+
+
+def path_walk(top, topdown=False, followlinks=False):
+    """
+    Source: http://ominian.com/2016/03/29/os-walk-for-pathlib-path/
+
+    """
+    names = list(top.iterdir())
+
+    dirs = (node for node in names if node.is_dir() is True)
+    nondirs = (node for node in names if node.is_dir() is False)
+
+    if topdown:
+        yield top, dirs, nondirs
+
+    for name in dirs:
+        if followlinks or name.is_symlink() is False:
+            for x in path_walk(name, topdown, followlinks):
+                yield x
+
+    if topdown is not True:
+        yield top, dirs, nondirs
